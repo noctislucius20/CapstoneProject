@@ -1,7 +1,7 @@
 from enum import unique
 
 from sqlalchemy import true
-from . import db
+from src import db
 
 class User(db.Model):
     id = db.Column(db.String(50), primary_key=True)

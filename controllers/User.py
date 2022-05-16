@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from nanoid import generate
 from werkzeug.security import generate_password_hash
-from .models import User
-from . import db
+from models.User import User
+from src import db
 
 
 user = Blueprint('user', __name__)
