@@ -4,3 +4,4 @@ werkzeug
 nanoid
 Flask-Migrate
 psycopg2
+pyjwt
