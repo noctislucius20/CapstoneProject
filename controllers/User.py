@@ -1,6 +1,6 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify
 from nanoid import generate
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from controllers.login import token_required
 from models.User import User
 from src import db
