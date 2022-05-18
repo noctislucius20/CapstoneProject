@@ -1,5 +1,3 @@
-from enum import unique
-
 from sqlalchemy import true
 from src import db
 

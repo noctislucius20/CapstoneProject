@@ -4,3 +4,5 @@ werkzeug
 nanoid
 Flask-Migrate
 psycopg2
+python-dotenv
+sqlalchemy_utils
