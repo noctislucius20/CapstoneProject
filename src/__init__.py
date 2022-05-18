@@ -21,9 +21,13 @@ def create_app():
     migrate = Migrate(app, db)
 
     from controllers.UserController import user
+    from controllers.AuthController import auth
 
     app.register_blueprint(user, url_prefix='/')
-   
+    app.register_blueprint(auth, url_prefix='/auth/')
+
+    # create_database(app)
+
     return app
 
  

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 from exceptions.ClientError import ClientError
 from services.UserService import UserService
-from src import db
+from controllers.AuthController import token_required
 
 
 user = Blueprint('user', __name__)
@@ -32,14 +32,16 @@ def create_user():
         return response
 
 @user.route('/users/<username>', methods=['GET'])
+@token_required
 def get_user_by_username(username):
     try:
-        user_data = UserService(username=username).get_one_user(username)
+        user_data = UserService().get_one_user(username)
 
         response = make_response({"status": "success", "data": user_data})
         response.headers['Content-Type'] = 'application/json'
         response.status_code = 200
         return response
+
     except ClientError as e:
         response = make_response({"status": "error", "message": e.message})
         response.status_code = 404
