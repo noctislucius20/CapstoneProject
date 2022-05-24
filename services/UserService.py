@@ -33,5 +33,9 @@ class UserService:
         user_data['id'] = user.id
         user_data['username'] = user.username
         user_data['fullName'] = user.full_name
+        user_data['gender'] = user.gender
+        user_data['date_of_birth'] = user.date_of_birth
+        user_data['height'] = user.height
+        user_data['weight'] = user.weight
 
         return user_data
