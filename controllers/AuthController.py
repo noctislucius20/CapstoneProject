@@ -15,13 +15,13 @@ def token_required(f):
     def decorator(*args, **kwargs):
         token = request.args.get('token')
         if not token:
-            return make_response(jsonify({'msg': 'Token is missing!'}), 401)
+            return make_response(jsonify({'status': 'error', 'message': 'Token is missing!'}), 401)
         
         # decode token
         try:
             output = jwt.decode(token, 'secret', algorithms=['HS256'])
         except:
-            return make_response(jsonify({'msg': 'Token is invalid!'}), 401)
+            return make_response(jsonify({'status': 'error', 'message': 'Token is invalid!'}), 401)
         
         return f(*args, **kwargs)
     
