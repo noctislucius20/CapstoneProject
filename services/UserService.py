@@ -6,15 +6,15 @@ from exceptions.InvariantError import InvariantError
 
 
 class UserService:
-    def add_user(self, username, password, fullName):
+    def add_user(self, username, password, fullName, gender, date_of_birth, height, weight):
         self.check_user_exists(username)
         hashed_password = generate_password_hash(password, method='sha256')
-        new_user = UserModel(id = f'user-{generate(size=16)}', username = username, password = hashed_password, full_name = fullName)
+        new_user = UserModel(id = f'user-{generate(size=16)}', username = username, password = hashed_password, full_name = fullName, gender = gender, date_of_birth = date_of_birth, height = height, weight = weight)
         
         db.session.add(new_user)
         db.session.commit()
 
-        result = {'id': new_user.id, 'username': new_user.username, 'fullName': new_user.full_name}
+        result = {'id': new_user.id, 'username': new_user.username, 'fullName': new_user.full_name, 'gender': new_user.gender, 'date_of_birth': new_user.date_of_birth, 'height': new_user.height, 'weight': new_user.weight}
         return(result)
 
     def check_user_exists(self, username):
