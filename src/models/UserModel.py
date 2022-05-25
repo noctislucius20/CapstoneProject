@@ -1,4 +1,3 @@
-import enum
 from src import db
 class User(db.Model):
     id = db.Column(db.String(50), primary_key=True)

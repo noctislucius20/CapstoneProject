@@ -13,25 +13,20 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
     app.config['JSON_SORT_KEYS'] = False
 
-    # if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-    #     raise Exception("Database does not exist")
+    if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+        raise Exception("Database does not exist")
 
     db.init_app(app)
 
     migrate = Migrate(app, db)
 
-    from controllers.UserController import user
-    from controllers.AuthController import auth
+    from src.controllers.UserController import user
+    from src.controllers.AuthController import auth
 
     app.register_blueprint(user, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/auth/')
 
-    # create_database(app)
-
     return app
 
-# def create_database(app):
-#     if not path.exists('src/capstones'):
-#         db.create_all(app=app)
-#         print('Created Database!')  
+ 
  

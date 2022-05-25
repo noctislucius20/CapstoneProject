@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash
 import jwt
 import datetime
 
-from models.UserModel import User as UserModel
+from src.models.UserModel import User as UserModel
 
 auth = Blueprint('auth', __name__)
 
@@ -13,7 +13,7 @@ auth = Blueprint('auth', __name__)
 def token_required(f):
     @wraps(f)
     def decorator(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.headers.get('Authorization').replace('Bearer ', '')
         if not token:
             return make_response(jsonify({'status': 'error', 'message': 'Token is missing!'}), 401)
         

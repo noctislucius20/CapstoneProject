@@ -1,4 +1,4 @@
-from exceptions.ClientError import ClientError
+from src.exceptions.ClientError import ClientError
 
 class InvariantError(ClientError):
     def __init__(self, message):
