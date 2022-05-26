@@ -1,5 +1,5 @@
-import enum
 from src import db
+from datetime import date
 class User(db.Model):
     id = db.Column(db.String(50), primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)
@@ -9,3 +9,8 @@ class User(db.Model):
     date_of_birth = db.Column(db.Date, nullable=False)
     height = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, nullable=False)
+
+def age(birthdate):
+    today = date.today()
+    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    return age

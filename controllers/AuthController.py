@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash
 import jwt
 import datetime
 
-from models.UserModel import User as UserModel
+from models.UserModel import User as UserModel, age
 
 auth = Blueprint('auth', __name__)
 
@@ -39,5 +39,17 @@ def login():
     if not logged_in:
         return jsonify({"message": "Wrong password"}), 401
     
+    user_data = {}
+    user_data['id'] = user.id
+    user_data['username'] = user.username
+    user_data['fullName'] = user.full_name
+    user_data['gender'] = user.gender
+    user_data['date_of_birth'] = user.date_of_birth
+    user_data['height'] = user.height
+    user_data['weight'] = user.weight
+    
+    # Count age of user
+    user_data['age'] = age(user.date_of_birth)
+        
     token = jwt.encode({'username': data['username'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 'secret', algorithm='HS256')
-    return make_response(jsonify({'token': token}))
+    return make_response(jsonify({'status': 'OK', 'data': user_data, 'token': token}), 200)
