@@ -54,17 +54,3 @@ def get_user_by_username(username):
         response.headers['Content-Type'] = 'application/json'
         return response
    
-
-    
- 
-
- 
-
-
-
-
-
-    
-
-
-

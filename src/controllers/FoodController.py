@@ -1,0 +1,59 @@
+from unittest import result
+from flask import Blueprint, request, jsonify, make_response
+from src.exceptions.ClientError import ClientError
+from src.services.FoodService import FoodService
+from src.controllers.AuthController import token_required
+import urllib.request
+import json
+
+food = Blueprint('food', __name__)
+
+@food.route('/food', methods=['POST'])
+@token_required
+def post_food():
+    data = request.get_json()
+    
+    try:
+        new_food = FoodService().add_food(food_name=data.get('food_name'), energi=data.get('energi'), protein=data.get('protein'), karbohidrat_total=data.get('karbohidrat_total'), lemak_total=data.get('lemak_total'))
+
+        response = make_response({"status": "success", "message": "New food added", "data": new_food})
+        response.headers['Content-Type'] = 'application/json'
+        response.status_code = 201
+        return response
+
+    except ClientError as e:
+        response = make_response({"status": "error", "message": "food failed to add"})
+        response.status_code = e.statusCode
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+    except:
+        #server error 
+        response = make_response({"status": "error", "message": "Server fail"})
+        response.status_code = 500
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+@food.route('/food/predict', methods=['POST'])
+@token_required
+def get_food():
+    try:
+        data = request.get_data()
+    
+        url = "http://127.0.0.1:5000/food_recommender/predict"
+        req = urllib.request.Request(url, method='GET')
+        req.add_header('Content-Type', 'application/json')
+        returned_data = urllib.request.urlopen(req, data)
+        result = returned_data.read()
+        
+        response = make_response({"status": "success", "data": json.loads(result)})
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    
+    except urllib.error.HTTPError as e:
+        response = make_response({"status": "error", "message": e.reason})
+        response.status_code = e.code
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+ 
