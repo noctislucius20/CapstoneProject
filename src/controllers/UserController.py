@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
-from exceptions.ClientError import ClientError
-from services.UserService import UserService
-from controllers.AuthController import token_required
+from src.exceptions.ClientError import ClientError
+from src.services.UserService import UserService
+from src.controllers.AuthController import token_required
 
 user = Blueprint('user', __name__)
 

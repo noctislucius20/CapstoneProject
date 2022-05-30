@@ -20,6 +20,9 @@ def token_required(f):
         
         # decode token
         try:
+            token = request.headers.get('Authorization').replace('Bearer ', '')
+            if not token:
+                return make_response(jsonify({'status': 'error', 'message': 'Token is missing!'}), 401)
             output = jwt.decode(token, 'secret', algorithms=['HS256'])
         except:
             return make_response(jsonify({'status': 'Unauthorized', 'message': 'Token is invalid!'}), 401)

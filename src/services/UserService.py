@@ -1,8 +1,8 @@
 from nanoid import generate
 from werkzeug.security import generate_password_hash
-from models.UserModel import User as UserModel
+from src.models.UserModel import User as UserModel
 from src import db
-from exceptions.InvariantError import InvariantError
+from src.exceptions.InvariantError import InvariantError
 
 
 class UserService:
