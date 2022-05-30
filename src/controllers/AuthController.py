@@ -4,9 +4,9 @@ from werkzeug.security import check_password_hash
 
 import jwt
 import datetime
-from exceptions.ClientError import ClientError
+from src.exceptions.ClientError import ClientError
 
-from models.UserModel import User as UserModel, age
+from src.models.UserModel import User as UserModel, age
 
 auth = Blueprint('auth', __name__)
 
