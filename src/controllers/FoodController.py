@@ -1,19 +1,18 @@
-from unittest import result
 from flask import Blueprint, request, jsonify, make_response
 from src.exceptions.ClientError import ClientError
 from src.services.FoodService import FoodService
 from src.controllers.AuthController import token_required
-import urllib.request
 import json
+import urllib
 
 food = Blueprint('food', __name__)
 
 @food.route('/food', methods=['POST'])
 @token_required
 def post_food():
-    data = request.get_json()
-    
     try:
+        data = request.get_json()
+
         new_food = FoodService().add_food(food_name=data.get('food_name'), energi=data.get('energi'), protein=data.get('protein'), karbohidrat_total=data.get('karbohidrat_total'), lemak_total=data.get('lemak_total'))
 
         response = make_response({"status": "success", "message": "New food added", "data": new_food})
@@ -22,7 +21,7 @@ def post_food():
         return response
 
     except ClientError as e:
-        response = make_response({"status": "error", "message": "food failed to add"})
+        response = make_response({"status": "error", "message": e.message})
         response.status_code = e.statusCode
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -34,22 +33,33 @@ def post_food():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+@food.route('/food', methods=['GET'])
+def get_all_food():
+    data = FoodService().get_food()
+
+    response = make_response({"status": "success", "data": data})
+    response.headers['Content-Type'] = 'application/json'
+    return response
+    
+
 @food.route('/food/predict', methods=['POST'])
 @token_required
 def get_food():
     try:
-        data = request.get_data()
+        data = request.get_json()
     
-        url = "http://127.0.0.1:5000/food_recommender/predict"
-        req = urllib.request.Request(url, method='GET')
-        req.add_header('Content-Type', 'application/json')
-        returned_data = urllib.request.urlopen(req, data)
-        result = returned_data.read()
+        result = FoodService().get_predicted_food(data)
         
         response = make_response({"status": "success", "data": json.loads(result)})
         response.headers['Content-Type'] = 'application/json'
         return response
     
+    except ClientError as e:
+        response = make_response({"status": "error", "message": e.message})
+        response.status_code = e.statusCode
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
     except urllib.error.HTTPError as e:
         response = make_response({"status": "error", "message": e.reason})
         response.status_code = e.code

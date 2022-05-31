@@ -17,6 +17,7 @@ def create_app():
     if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
         raise Exception("Database does not exist")
 
+    # app initialization
     db.init_app(app)
     migrate.init_app(app, db)
     
@@ -28,10 +29,12 @@ def create_app():
     from src.controllers.UserController import user
     from src.controllers.AuthController import auth
     from src.controllers.FoodController import food
+    # from src.controllers.ChatController import chat
 
     app.register_blueprint(user, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/auth/')
     app.register_blueprint(food, url_prefix='/')
+    # app.register_blueprint(chat, url_prefix='/bot/')
 
 
     return app
