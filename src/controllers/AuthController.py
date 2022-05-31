@@ -52,12 +52,13 @@ def login():
         user_data['date_of_birth'] = user.date_of_birth
         user_data['height'] = user.height
         user_data['weight'] = user.weight
+        user_data['token'] = token
         
         # Count age of user
         user_data['age'] = age(user.date_of_birth)
             
         token = jwt.encode({'username': data['username'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 'secret', algorithm='HS256')
-        return make_response(jsonify({'status': 'OK', 'data': user_data, 'token': token}), 200)
+        return make_response(jsonify({'status': 'OK', 'data': user_data}), 200)
     
     except ClientError as e:
         response = make_response({"status": "error", "message": e.message})
