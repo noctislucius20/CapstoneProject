@@ -3,7 +3,8 @@ flask_sqlalchemy
 werkzeug
 nanoid
 Flask-Migrate
-psycopg2
+psycopg2-binary
 python-dotenv
 sqlalchemy_utils
 pyjwt
+waitress

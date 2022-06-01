@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from sqlalchemy_utils.functions import database_exists
 from flask_migrate import Migrate
+from dotenv import load_dotenv
+
+load_dotenv()
 
 db = SQLAlchemy()
 migrate = Migrate()
