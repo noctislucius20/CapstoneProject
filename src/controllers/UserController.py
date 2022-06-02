@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, make_response
 from src.exceptions.ClientError import ClientError
 from src.services.UserService import UserService
 from src.controllers.AuthController import token_required

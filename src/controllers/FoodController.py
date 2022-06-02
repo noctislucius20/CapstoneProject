@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, make_response
 from src.exceptions.ClientError import ClientError
 from src.services.FoodService import FoodService
 from src.controllers.AuthController import token_required
@@ -46,8 +46,8 @@ def get_all_food():
 @token_required
 def get_food():
     data = request.get_json()
+
     try:
-    
         result = FoodService().get_predicted_food(data)
         
         response = make_response({"status": "success", "data": json.loads(result)})
@@ -61,7 +61,7 @@ def get_food():
         return response
 
     except urllib.error.HTTPError as e:
-        response = make_response({"status": "error", "message": e.reason})
+        response = make_response({"status": "error", "message": "Server fail"})
         response.status_code = e.code
         response.headers['Content-Type'] = 'application/json'
         return response
