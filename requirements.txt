@@ -8,3 +8,4 @@ python-dotenv
 sqlalchemy_utils
 pyjwt
 waitress
+flask-cors

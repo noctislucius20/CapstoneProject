@@ -14,8 +14,8 @@ def token_required(f):
     @wraps(f)
     def decorator(*args, **kwargs):
         # decode token
+        token = request.headers.get('Authorization').replace('Bearer ', '')
         try:
-            token = request.headers.get('Authorization').replace('Bearer ', '')
             if not token:
                 return make_response(jsonify({'status': 'error', 'message': 'Token is missing!'}), 401)
             output = jwt.decode(token, 'secret', algorithms=['HS256'])
