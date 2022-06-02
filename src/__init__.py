@@ -19,8 +19,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
     app.config['JSON_SORT_KEYS'] = False
 
-    # if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
-    #     raise Exception("Database does not exist")
+    if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
+        raise Exception("Database does not exist")
 
     # app initialization
     cors.init_app(app)
