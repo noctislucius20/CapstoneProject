@@ -11,8 +11,8 @@ food = Blueprint('food', __name__)
 @token_required
 def post_food():
     data = request.get_json()
+    
     try:
-
         new_food = FoodService().add_food(food_name=data.get('food_name'), energi=data.get('energi'), protein=data.get('protein'), karbohidrat_total=data.get('karbohidrat_total'), lemak_total=data.get('lemak_total'))
 
         response = make_response({"status": "success", "message": "New food added", "data": new_food})
