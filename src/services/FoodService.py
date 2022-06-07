@@ -4,6 +4,10 @@ from src import db
 from src.exceptions.InvariantError import InvariantError
 import urllib.request
 from sqlalchemy import func
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class FoodService:
     def add_food(self, food_name, energi, protein, karbohidrat_total, lemak_total):
@@ -23,7 +27,9 @@ class FoodService:
             raise InvariantError(message="Food not exist")
         
         data_to_bytes = json.dumps(data).encode('utf-8')
-        url = "http://127.0.0.1:5000/food_recommender/predict"
+        host = os.getenv('ML_SERVER_HOST')
+        port = os.getenv('ML_SERVER_PORT')
+        url = f'http://{host}:{port}/food_recommender/predict'
         req = urllib.request.Request(url, method='GET')
         req.add_header('Content-Type', 'application/json')
         returned_data = urllib.request.urlopen(req, data_to_bytes)

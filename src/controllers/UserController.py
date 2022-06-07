@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, make_response
 from src.exceptions.ClientError import ClientError
 from src.services.UserService import UserService
 from src.controllers.AuthController import token_required
@@ -7,10 +7,9 @@ user = Blueprint('user', __name__)
 
 @user.route('/users', methods=['POST'])
 def create_user():
-
+    data = request.get_json()
+    
     try:
-        data = request.get_json()
-        
         new_user = UserService().add_user(username=data.get('username'), password=data.get('password'), fullName=data.get('fullName'), gender=data.get('gender'), date_of_birth=data.get('date_of_birth'), height=data.get('height'), weight=data.get('weight'))
 
         response = make_response({"status": "success", "message": "New user created", "data": new_user})
