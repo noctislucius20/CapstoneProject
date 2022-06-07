@@ -1,5 +1,6 @@
 from src import db
 from datetime import date
+
 class User(db.Model):
     id = db.Column(db.String(50), primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)

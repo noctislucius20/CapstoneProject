@@ -5,10 +5,8 @@ from src.models.UserModel import User as UserModel
 from src import db
 from src.exceptions.InvariantError import InvariantError
 
-
 class UserService:
     def add_user(self, username, password, fullName, gender, date_of_birth, height, weight):
-        
         self.check_user_exists(username)
         hashed_password = generate_password_hash(password, method='sha256')
         new_user = UserModel(id = f'user-{generate(size=16)}', username = username, password = hashed_password, full_name = fullName, gender = gender, date_of_birth = date_of_birth, height = height, weight = weight)
