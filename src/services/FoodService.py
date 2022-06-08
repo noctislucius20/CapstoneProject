@@ -29,7 +29,7 @@ class FoodService:
         data_to_bytes = json.dumps(data).encode('utf-8')
         ml_url = os.getenv('ML_SERVER_URL')
         url = f'https://{ml_url}/food_recommender/predict'
-        req = urllib.request.Request(url, method='GET')
+        req = urllib.request.Request(url, method='POST')
         req.add_header('Content-Type', 'application/json')
         returned_data = urllib.request.urlopen(req, data_to_bytes)
         result = returned_data.read()
