@@ -5,7 +5,6 @@ from src.models.UserModel import User as UserModel
 from src import db
 from src.exceptions.InvariantError import InvariantError
 
-
 class UserService:
     def add_user(self, username, password, fullName, gender, date_of_birth, height, weight):
         self.check_user_exists(username)
