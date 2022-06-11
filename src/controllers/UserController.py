@@ -5,7 +5,7 @@ from src.controllers.AuthController import token_required
 
 user = Blueprint('user', __name__)
 
-@user.route('/users', methods=['POST'])
+@user.route('/register', methods=['POST'])
 def create_user():
     data = request.get_json()
     
