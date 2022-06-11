@@ -27,10 +27,9 @@ class FoodService:
             raise InvariantError(message="Food not exist")
         
         data_to_bytes = json.dumps(data).encode('utf-8')
-        host = os.getenv('ML_SERVER_HOST')
-        port = os.getenv('ML_SERVER_PORT')
-        url = f'http://{host}:{port}/food_recommender/predict'
-        req = urllib.request.Request(url, method='GET')
+        ml_url = os.getenv('ML_SERVER_URL')
+        url = f'https://{ml_url}/food_recommender/predict'
+        req = urllib.request.Request(url, method='POST')
         req.add_header('Content-Type', 'application/json')
         returned_data = urllib.request.urlopen(req, data_to_bytes)
         result = returned_data.read()
