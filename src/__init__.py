@@ -15,8 +15,16 @@ cors = CORS()
 def create_app():
     app = Flask(__name__)
 
+    # DB connection variables
+    pg_host = os.getenv('PGHOST')
+    pg_port = os.getenv('PGPORT')
+    pg_db = os.getenv('PGDATABASE')
+    pg_user = os.getenv('PGUSER')
+    pg_pass = os.getenv('PGPASSWORD')
+
+    # flask app configuration
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}'
     app.config['JSON_SORT_KEYS'] = False
 
     if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
