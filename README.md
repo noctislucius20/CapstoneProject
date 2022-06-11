@@ -1,7 +1,7 @@
-# NutriCARE Application
-NutriCARE is a mobile application that allows users to track their nutritional intake and track their health. 
+# NutrieCare Application
+NutrieCare is a mobile application that allows users to track their nutritional intake and track their health. 
 
-Using Flask framework to build Restful API for NutriCARE Application. 
+Using Flask framework to build Restful API for NutrieCare Application. 
 
 ## How to run the application
 #### Create a virtual environment: 
