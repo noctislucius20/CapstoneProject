@@ -50,6 +50,13 @@
 
 ```json
 {
+    "status": "error",
+    "message": "Food not exist"
+}
+```
+
+```json
+{
     "status": "Unauthorized",
     "message": "Token is invalid!"
 }
